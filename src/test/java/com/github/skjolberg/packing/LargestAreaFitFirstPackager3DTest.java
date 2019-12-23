@@ -1,15 +1,12 @@
 package com.github.skjolberg.packing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
 
 class LargestAreaFitFirstPackager3DTest extends AbstractPackagerTest {
 
@@ -240,6 +237,22 @@ class LargestAreaFitFirstPackager3DTest extends AbstractPackagerTest {
 		LargestAreaFitFirstPackager packager = new LargestAreaFitFirstPackager(containers);
 
 		List<BoxItem> products = listOf20Products();
+
+		Container fits1 = packager.pack(products);
+		assertNotNull(fits1);
+	}
+
+	@Test
+	void with20IdenticalProducts() {
+		final int w = 28;
+		final int d = 32;
+		final int h = 37;
+		final int weight = 128;
+		final Container container = new Container(w * 2, d * 5, h * 2, weight * 20);
+		List<Container> containers = container.rotations();
+		LargestAreaFitFirstPackager packager = new LargestAreaFitFirstPackager(containers);
+
+		List<BoxItem> products = listOfIdenticalProducts(w, d, h, weight, 20);
 
 		Container fits1 = packager.pack(products);
 		assertNotNull(fits1);
